@@ -1,0 +1,387 @@
+[
+  {
+    "title": "Design REST endpoints for user profile service",
+    "description": "Define resource paths, verbs and response shapes for GET/PUT/DELETE /users/:id. Document in OpenAPI 3.1.",
+    "status": "done",
+    "priority": "high",
+    "dueDate": "2026-10-28",
+    "comments": [
+      {
+        "body": "Spec reviewed, merged to main.",
+        "author": "Priya"
+      },
+      {
+        "body": "Added 409 for duplicate email.",
+        "author": "Harsh"
+      }
+    ]
+  },
+  {
+    "title": "Implement JWT authentication middleware",
+    "description": "Verify access tokens, attach user to req, return 401 with a consistent error body on failure.",
+    "status": "done",
+    "priority": "high",
+    "dueDate": "2026-10-30",
+    "comments": [
+      {
+        "body": "Using RS256 so other services can verify.",
+        "author": "Harsh"
+      }
+    ]
+  },
+  {
+    "title": "Add refresh token rotation",
+    "description": "Rotate refresh tokens on every use and revoke the family on reuse detection.",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2026-11-06",
+    "comments": [
+      {
+        "body": "Reuse detection works locally, need Redis for prod.",
+        "author": "Aman"
+      },
+      {
+        "body": "Which TTL are we using?",
+        "author": "Priya"
+      },
+      {
+        "body": "7 days refresh, 15 min access.",
+        "author": "Aman"
+      }
+    ]
+  },
+  {
+    "title": "Set up rate limiting on public endpoints",
+    "description": "Limit to 100 req/min per IP using a sliding window. Return 429 with Retry-After header.",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2026-11-04",
+    "comments": [
+      {
+        "body": "Starting with express-rate-limit, Redis store later.",
+        "author": "Neha"
+      }
+    ]
+  },
+  {
+    "title": "Write OpenAPI documentation for orders API",
+    "description": "Cover request/response schemas, error codes and examples. Publish with Swagger UI at /docs.",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2026-11-10",
+    "comments": []
+  },
+  {
+    "title": "Fix N+1 query on GET /orders",
+    "description": "Orders list triggers one query per customer. Use populate or a single aggregate.",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2026-11-03",
+    "comments": [
+      {
+        "body": "Response time dropped from 1.8s to 220ms in staging.",
+        "author": "Rohan"
+      },
+      {
+        "body": "Great. Add an index on customerId too.",
+        "author": "Harsh"
+      }
+    ]
+  },
+  {
+    "title": "Add pagination to GET /tasks",
+    "description": "Cursor-based pagination with limit and cursor params. Default limit 20, max 100.",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2026-11-12",
+    "comments": [
+      {
+        "body": "Cursor on createdAt + _id to keep ordering stable.",
+        "author": "Priya"
+      }
+    ]
+  },
+  {
+    "title": "Standardize error response format",
+    "description": "All errors return { error: { code, message, details } }. Update the central error handler.",
+    "status": "done",
+    "priority": "medium",
+    "dueDate": "2026-10-29",
+    "comments": [
+      {
+        "body": "Applied across all routes.",
+        "author": "Neha"
+      }
+    ]
+  },
+  {
+    "title": "Implement request validation with Zod",
+    "description": "Validate body, params and query on every route. Reject unknown fields.",
+    "status": "in-progress",
+    "priority": "medium",
+    "dueDate": "2026-11-07",
+    "comments": [
+      {
+        "body": "Auth and tasks routes done, orders remaining.",
+        "author": "Aman"
+      }
+    ]
+  },
+  {
+    "title": "Set up CI pipeline with GitHub Actions",
+    "description": "Run lint, unit tests and build on every PR. Cache node_modules.",
+    "status": "done",
+    "priority": "medium",
+    "dueDate": "2026-10-27",
+    "comments": [
+      {
+        "body": "Pipeline takes 2m 40s.",
+        "author": "Rohan"
+      }
+    ]
+  },
+  {
+    "title": "Write integration tests for auth endpoints",
+    "description": "Cover signup, login, refresh, logout and invalid token paths using Supertest and an in-memory Mongo.",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2026-11-09",
+    "comments": []
+  },
+  {
+    "title": "Add idempotency keys to POST /payments",
+    "description": "Accept an Idempotency-Key header and return the stored response on repeats within 24 hours.",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2026-11-11",
+    "comments": [
+      {
+        "body": "Store keys in Redis with a 24h TTL.",
+        "author": "Harsh"
+      },
+      {
+        "body": "Do we hash the request body too?",
+        "author": "Neha"
+      }
+    ]
+  },
+  {
+    "title": "Dockerize the API service",
+    "description": "Multi-stage Dockerfile, non-root user, healthcheck, and docker-compose with Mongo and Redis.",
+    "status": "done",
+    "priority": "medium",
+    "dueDate": "2026-10-26",
+    "comments": [
+      {
+        "body": "Image size is 142 MB.",
+        "author": "Rohan"
+      }
+    ]
+  },
+  {
+    "title": "Add structured logging with request IDs",
+    "description": "Use pino, generate X-Request-Id per request and include it in every log line and error response.",
+    "status": "in-progress",
+    "priority": "medium",
+    "dueDate": "2026-11-05",
+    "comments": []
+  },
+  {
+    "title": "Implement soft delete for tasks",
+    "description": "Add deletedAt field, exclude from default queries, and expose a restore endpoint.",
+    "status": "todo",
+    "priority": "low",
+    "dueDate": "2026-11-18",
+    "comments": []
+  },
+  {
+    "title": "Create health and readiness endpoints",
+    "description": "GET /health for liveness and GET /ready that checks the database and Redis connections.",
+    "status": "done",
+    "priority": "low",
+    "dueDate": "2026-10-25",
+    "comments": [
+      {
+        "body": "Wired into the k8s probes.",
+        "author": "Rohan"
+      }
+    ]
+  },
+  {
+    "title": "Add API versioning strategy",
+    "description": "Prefix routes with /v1 and document the deprecation policy for older versions.",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2026-11-14",
+    "comments": [
+      {
+        "body": "Header versioning is overkill for us, going with URL.",
+        "author": "Priya"
+      }
+    ]
+  },
+  {
+    "title": "Investigate memory leak in file upload handler",
+    "description": "Heap grows by about 40 MB per 100 uploads. Check stream handling and unclosed buffers.",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2026-11-02",
+    "comments": [
+      {
+        "body": "Found it: buffers retained in a closure.",
+        "author": "Aman"
+      },
+      {
+        "body": "Fix is in review.",
+        "author": "Aman"
+      }
+    ]
+  },
+  {
+    "title": "Add role-based access control",
+    "description": "Define admin, manager and member roles. Guard routes with a permission middleware.",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2026-11-15",
+    "comments": []
+  },
+  {
+    "title": "Cache GET /products with Redis",
+    "description": "Cache for 60 seconds with cache invalidation on product update or delete.",
+    "status": "in-progress",
+    "priority": "medium",
+    "dueDate": "2026-11-08",
+    "comments": [
+      {
+        "body": "Hit ratio is 78% in staging.",
+        "author": "Neha"
+      }
+    ]
+  },
+  {
+    "title": "Write Postman collection for QA team",
+    "description": "Include environments, example payloads and test scripts for each endpoint.",
+    "status": "done",
+    "priority": "low",
+    "dueDate": "2026-10-24",
+    "comments": [
+      {
+        "body": "Shared in the team workspace.",
+        "author": "Priya"
+      }
+    ]
+  },
+  {
+    "title": "Add CORS configuration per environment",
+    "description": "Allow only whitelisted origins in production and permissive origins in development.",
+    "status": "done",
+    "priority": "medium",
+    "dueDate": "2026-10-23",
+    "comments": []
+  },
+  {
+    "title": "Implement webhook delivery with retries",
+    "description": "Send events with HMAC signature, exponential backoff and a dead letter queue after 5 failures.",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2026-11-20",
+    "comments": [
+      {
+        "body": "Should we use BullMQ for the queue?",
+        "author": "Harsh"
+      },
+      {
+        "body": "Yes, we already run Redis.",
+        "author": "Rohan"
+      }
+    ]
+  },
+  {
+    "title": "Upgrade dependencies and fix audit warnings",
+    "description": "Update Express, Mongoose and dev tooling. Resolve all high severity npm audit issues.",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2026-11-13",
+    "comments": []
+  },
+  {
+    "title": "Add database indexes for slow queries",
+    "description": "Create compound indexes on (status, createdAt) and (assignee, dueDate) after reviewing explain plans.",
+    "status": "in-progress",
+    "priority": "medium",
+    "dueDate": "2026-11-06",
+    "comments": [
+      {
+        "body": "Explain shows COLLSCAN on /tasks?status=done.",
+        "author": "Aman"
+      }
+    ]
+  },
+  {
+    "title": "Set up error monitoring with Sentry",
+    "description": "Capture unhandled exceptions with release tags and strip sensitive fields before sending.",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2026-11-16",
+    "comments": []
+  },
+  {
+    "title": "Implement file upload to S3 with presigned URLs",
+    "description": "Return a presigned PUT URL, limit size to 10 MB and restrict content types.",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2026-11-19",
+    "comments": [
+      {
+        "body": "Need bucket policy from DevOps.",
+        "author": "Neha"
+      }
+    ]
+  },
+  {
+    "title": "Fix timezone bug in due date filtering",
+    "description": "Tasks due today disappear after 6 PM IST. Normalize all dates to UTC start of day.",
+    "status": "done",
+    "priority": "high",
+    "dueDate": "2026-10-31",
+    "comments": [
+      {
+        "body": "Root cause: local midnight comparison.",
+        "author": "Harsh"
+      },
+      {
+        "body": "Verified in staging, closing.",
+        "author": "Priya"
+      }
+    ]
+  },
+  {
+    "title": "Add request size limits and sanitization",
+    "description": "Cap JSON body at 100 KB, strip NoSQL operators from input, and escape regex in search.",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2026-11-04",
+    "comments": []
+  },
+  {
+    "title": "Load test the API with k6",
+    "description": "Simulate 500 concurrent users on core endpoints. Target p95 under 300 ms and error rate under 1%.",
+    "status": "todo",
+    "priority": "low",
+    "dueDate": "2026-11-22",
+    "comments": [
+      {
+        "body": "Run against staging only, not prod.",
+        "author": "Rohan"
+      }
+    ]
+  },
+  {
+    "title": "Write onboarding guide for new API developers",
+    "description": "Cover local setup, project structure, coding standards and the PR checklist.",
+    "status": "todo",
+    "priority": "low",
+    "dueDate": "2026-11-25",
+    "comments": []
+  }
+]
