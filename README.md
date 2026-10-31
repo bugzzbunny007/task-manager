@@ -2,6 +2,20 @@
 
 A Jira-inspired task management board designed for engineering teams. Create, view, edit, filter, comment on, reorder, and delete tasks on an award-level Kanban board or list view. Built with MongoDB, Express, React (Vite), and Node.js.
 
+## 🚀 Live Demo & Deployment
+
+- **Live Web Application:** [https://task-manager-lime-phi-68.vercel.app/](https://task-manager-lime-phi-68.vercel.app/)
+- **GitHub Repository:** [https://github.com/bugzzbunny007/task-manager](https://github.com/bugzzbunny007/task-manager)
+
+### Live Backend Endpoints (Serverless on Vercel)
+The backend is deployed directly on Vercel as serverless API functions under the exact same domain:
+- **API Health Check:** [https://task-manager-lime-phi-68.vercel.app/api](https://task-manager-lime-phi-68.vercel.app/api)
+  - Output: `{"message":"TaskBoard API running","status":"ok"}`
+- **Tasks Endpoint:** [https://task-manager-lime-phi-68.vercel.app/api/tasks](https://task-manager-lime-phi-68.vercel.app/api/tasks)
+  - *(Returns all tasks dynamically from MongoDB Atlas)*
+
+---
+
 ## Features
 - **Full-Canvas Kanban Board**: Three equally divided, full-height column sections (**To Do**, **In Progress**, **Done**) with smooth drag-and-drop.
 - **List View**: Alternative table view with multi-column sorting (Title, Status, Priority, Due Date).
