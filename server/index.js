@@ -8,12 +8,12 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection caching for Serverless & Local development
-let isConnected = false;
 const connectDB = async () => {
-  if (isConnected || mongoose.connection.readyState >= 1) return;
+  if (mongoose.connection.readyState === 1) return;
   const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/taskmanager';
-  await mongoose.connect(uri);
-  isConnected = true;
+  await mongoose.connect(uri, {
+    serverSelectionTimeoutMS: 5000,
+  });
 };
 
 // Ensure DB is connected before processing requests
@@ -22,8 +22,10 @@ app.use(async (req, res, next) => {
     await connectDB();
     next();
   } catch (err) {
-    console.error('Mongo connection error:', err);
-    res.status(500).json({ error: 'Database connection failed' });
+    console.error('Mongo connection error:', err.message);
+    return res.status(500).json({ 
+      error: 'Database connection failed. Please ensure MongoDB Atlas Network Access allows 0.0.0.0/0 (anywhere) for Vercel.' 
+    });
   }
 });
 
