@@ -83,14 +83,22 @@ PORT=5000
 
 ---
 
-### Seed Sample Data (Optional)
-If you have a seed script (`seed.js` / `tasks-seed.json`):
+### Seed Sample Data (Included)
+The repository includes a standalone seed runner (`seed.js`) along with a dataset of 31 realistic engineering tasks, complete with priority levels, due dates, and discussion comments (`tasks-seed.json`).
+
+Run the seed script against either your local development API or the live Vercel deployment:
+
 ```bash
+# Option A: Seed against local dev server
 node seed.js http://localhost:5000/api/tasks
+
+# Option B: Seed directly against live Vercel deployment
+node seed.js https://task-manager-lime-phi-68.vercel.app/api/tasks
 ```
+
 To reset and clear all tasks in MongoDB:
 ```js
-// In mongosh or Mongo shell:
+// In mongosh or Mongo Atlas shell:
 use taskmanager
 db.tasks.deleteMany({})
 ```
@@ -164,13 +172,15 @@ All endpoints use JSON and return standard error responses in the shape `{ "erro
 ## Project Structure
 ```
 task-manager/
+├── api/
+│   └── index.js                        # Vercel Serverless Function entry point
 ├── client/
 │   ├── index.html
 │   ├── package.json
 │   ├── vite.config.js
 │   └── src/
 │       ├── App.jsx                     # Shell, navbar, theme & shortcuts state, toasts
-│       ├── api.js                      # Centralized API fetch layer
+│       ├── api.js                      # Centralized API fetch layer (supports Vercel relative path)
 │       ├── main.jsx                    # React root entry
 │       ├── styles.css                  # Design system tokens, motion, responsive layout
 │       └── components/
@@ -182,12 +192,16 @@ task-manager/
 │           ├── MoveSheet.jsx           # Mobile touch long-press bottom sheet
 │           ├── ShortcutsModal.jsx      # '?' keyboard cheat-sheet dialog
 │           └── TaskPanel.jsx           # Slide-over task detail drawer
-└── server/
-    ├── .env.example
-    ├── index.js                        # Express server and central error handler
-    ├── package.json
-    ├── models/
-    │   └── Task.js                     # Mongoose schema with embedded comments
-    └── routes/
-        └── tasks.js                    # Task & comment CRUD routes
+├── server/
+│   ├── .env.example
+│   ├── index.js                        # Express server and central error handler
+│   ├── package.json
+│   ├── models/
+│   │   └── Task.js                     # Mongoose schema with embedded comments
+│   └── routes/
+│       └── tasks.js                    # Task & comment CRUD routes
+├── package.json                        # Root monorepo build script for Vercel
+├── seed.js                             # Seed runner script (Node 18+ fetch)
+├── tasks-seed.json                     # 31 realistic sample tasks & comment threads
+└── vercel.json                         # Vercel deployment configuration & routing
 ```
