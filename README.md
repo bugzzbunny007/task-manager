@@ -6,7 +6,7 @@ A Jira-inspired task management board designed for engineering teams. Create, vi
 
 - **Live Web Application:** [https://task-manager-lime-phi-68.vercel.app/](https://task-manager-lime-phi-68.vercel.app/)
 - **GitHub Repository:** [https://github.com/bugzzbunny007/task-manager](https://github.com/bugzzbunny007/task-manager)
-- **Demo Walkthrough Video:** [Harsh_Yadav_task_management.mp4](./client/Harsh_Yadav_task_management.mp4)
+- **Demo Walkthrough Video:** [Watch on Google Drive](https://drive.google.com/file/d/16oEQaq16GBl3VuIRDHlTXbmXXbj0J4H9/view?usp=sharing)
 
 ### Live Backend Endpoints (Serverless on Vercel)
 The backend is deployed directly on Vercel as serverless API functions under the exact same domain:
